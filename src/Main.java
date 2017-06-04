@@ -1,9 +1,14 @@
 /**
- * A program to convert all .sql files in the current folder from gatherer extractor to be interpreted by the mysql database.
- * @auther Zach Tanenbaum
+ * A program to convert all .sql files in the current folder from gatherer extractor to be interpreted by an mysql database.
+ *
+ * This program separates each statement with a ';' instead of a ',' as well as removing all non-printable characters that seem
+ * to appear in the rulings instead of the proper {E}/{U} Etc.
+ *
+ * @author Zach Tanenbaum
  */
 
 import java.io.*;
+import java.text.Normalizer;
 
 public class Main {
 
@@ -47,6 +52,9 @@ public class Main {
                                 line += ";";
                             }
 
+                            // Only allow printable characters
+                            line = line.replaceAll("\\P{Print}", "");
+
                             // Write line to fixed file
                             out.write(line);
 
@@ -86,5 +94,6 @@ public class Main {
             { return filename.endsWith(".sql"); }
         } );
     }
+
 
 }
